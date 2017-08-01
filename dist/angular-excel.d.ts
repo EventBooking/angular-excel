@@ -46,12 +46,12 @@ declare class WorkSheet implements IWorkSheet {
     getCell(row: number, col: number): ICell;
 }
 interface IWorkBook {
-    addWorkSheet(name: string): IWorkSheet;
+    addWorkSheet(ws: string | WorkSheet): IWorkSheet;
 }
 declare class WorkBook implements IWorkBook {
     private xlsx;
     constructor(xlsx: any);
-    addWorkSheet(name: string): IWorkSheet;
+    addWorkSheet(worksheet: string | WorkSheet): IWorkSheet;
     private _sheetNames;
     private _sheets;
 }
@@ -68,18 +68,27 @@ declare class ExcelConverter implements IExcelConverter {
     saveAs(name: string, workbook: IWorkBook): void;
     private convertToBinary(workbook);
 }
-interface IExcelBuilder<T> {
-    addDateColumn(name: string, expression: (x: T) => any): IExcelBuilder<T>;
-    addColumn(name: string, expression: (x: T) => any, createCell?: (x: any) => ICell): IExcelBuilder<T>;
-    build(): IWorkBook;
+interface IWorkSheetBuilder<T> {
+    addDateColumn(name: string, expression: (x: T) => any): IWorkSheetBuilder<T>;
+    addColumn(name: string, expression: (x: T) => any, createCell?: (x: any) => ICell): IWorkSheetBuilder<T>;
+    setName(name: string): IWorkSheetBuilder<T>;
+    setWorkbook(workbook: IWorkBook): IWorkSheetBuilder<T>;
+    setValues(values: T[]): any;
+    build(): IWorkSheet;
 }
-declare class ExcelBuilder<T> implements IExcelBuilder<T> {
+declare class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
     private excelConverter;
-    private fileName;
+    private xlsx;
+    static $inject: string[];
+    constructor(excelConverter: IExcelConverter, xlsx: any);
+    addDateColumn(name: string, expression: (x: T) => any): IWorkSheetBuilder<T>;
+    addColumn(name: string, expression: (x: T) => any, createCell?: (x: any) => ICell): IWorkSheetBuilder<T>;
+    setName(name: string): IWorkSheetBuilder<T>;
+    setWorkbook(workbook: IWorkBook): IWorkSheetBuilder<T>;
+    setValues(values: T[]): IWorkSheetBuilder<T>;
+    build(): IWorkSheet;
     private values;
-    constructor(excelConverter: IExcelConverter, fileName: string, values: T[]);
-    addDateColumn(name: string, expression: (x: T) => any): IExcelBuilder<T>;
-    addColumn(name: string, expression: (x: T) => any, createCell?: (x: any) => ICell): IExcelBuilder<T>;
-    build(): IWorkBook;
+    private name;
+    private workbook;
     private columns;
 }

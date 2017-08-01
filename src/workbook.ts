@@ -1,5 +1,6 @@
 interface IWorkBook {
-    addWorkSheet(name: string): IWorkSheet;
+    addWorkSheet(ws: string | WorkSheet): IWorkSheet;
+
 }
 
 class WorkBook implements IWorkBook {
@@ -8,11 +9,15 @@ class WorkBook implements IWorkBook {
         this['Sheets'] = {};
     }
 
-    addWorkSheet(name: string): IWorkSheet {
-        var worksheet = new WorkSheet(name, this.xlsx);
+    addWorkSheet(worksheet: string | WorkSheet): IWorkSheet {
+        if (typeof worksheet == "string")
+            worksheet = new WorkSheet(worksheet, this.xlsx);
+
+        const name = worksheet.name;
         let sheetNames: string[] = this['SheetNames'];
         sheetNames.push(name);
         this['Sheets'][name] = worksheet;
+        
         return worksheet;
     }
 

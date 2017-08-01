@@ -18,6 +18,6 @@
         "src/worksheet.ts",
         "src/workbook.ts",
         "src/excelConverter.ts",
-        "src/excelBuilder.ts"
+        "src/worksheetBuilder.ts"
     ]
 }
