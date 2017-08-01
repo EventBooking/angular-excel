@@ -68,3 +68,18 @@ declare class ExcelConverter implements IExcelConverter {
     saveAs(name: string, workbook: IWorkBook): void;
     private convertToBinary(workbook);
 }
+interface IExcelBuilder<T> {
+    addDateColumn(name: string, expression: (x: T) => any): IExcelBuilder<T>;
+    addColumn(name: string, expression: (x: T) => any, createCell?: (x: any) => ICell): IExcelBuilder<T>;
+    build(): IWorkBook;
+}
+declare class ExcelBuilder<T> implements IExcelBuilder<T> {
+    private excelConverter;
+    private fileName;
+    private values;
+    constructor(excelConverter: IExcelConverter, fileName: string, values: T[]);
+    addDateColumn(name: string, expression: (x: T) => any): IExcelBuilder<T>;
+    addColumn(name: string, expression: (x: T) => any, createCell?: (x: any) => ICell): IExcelBuilder<T>;
+    build(): IWorkBook;
+    private columns;
+}
