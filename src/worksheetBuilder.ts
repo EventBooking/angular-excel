@@ -3,16 +3,13 @@ interface IWorkSheetBuilder<T> {
     addColumn(name: string, expression: (x: T) => any, createCell?: (x: any) => ICell): IWorkSheetBuilder<T>;
     setName(name: string): IWorkSheetBuilder<T>;
     setWorkbook(workbook: IWorkBook): IWorkSheetBuilder<T>;
-    setValues(values: T[]);
     build(): IWorkSheet;
 }
 
 class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
-    static $inject = ['excelConverter', 'XLSX'];
-
     constructor(
-        private excelConverter: IExcelConverter,
-        private xlsx: any
+        private xlsx: any,
+        private values: T[]
     ) {
         this.columns = [];
     }
@@ -37,11 +34,6 @@ class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
         return this;
     }
 
-    setValues(values: T[]): IWorkSheetBuilder<T> {
-        this.values = values;
-        return this;
-    }
-
     build(): IWorkSheet {
         var worksheet = this.workbook ? this.workbook.addWorkSheet(this.name) : new WorkSheet(this.name, this.xlsx);
 
@@ -62,10 +54,7 @@ class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
         return worksheet;
     }
 
-    private values: T[];
     private name: string;
     private workbook: IWorkBook;
     private columns: { name: string, expression: (x: T) => any, createCell?: (x: any) => ICell }[];
 }
-
-Angular.module("angular-excel").service('workSheetBuilder', WorkSheetBuilder);

@@ -1,5 +1,6 @@
 interface IExcelConverter {
     create(): IWorkBook;
+    createBuilder<T>(values: T[]): WorkSheetBuilder<T>;
     saveAs(name: string, workbook: IWorkBook);
 }
 
@@ -14,6 +15,11 @@ class ExcelConverter implements IExcelConverter {
     create(): IWorkBook {
         var wb = new WorkBook(this.xlsx);
         return wb;
+    }
+
+    createBuilder<T>(values: T[]): WorkSheetBuilder<T> {
+        const builder = new WorkSheetBuilder(this.xlsx, values);
+        return builder;
     }
 
     saveAs(name: string, workbook: IWorkBook) {
