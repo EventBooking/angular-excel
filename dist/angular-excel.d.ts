@@ -1,5 +1,5 @@
-declare var XLSX: any;
-declare var saveAs: any;
+declare namespace excel {
+}
 interface ICellAddress {
     c: number;
     r: number;
