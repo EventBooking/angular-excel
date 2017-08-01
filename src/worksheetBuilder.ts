@@ -2,7 +2,6 @@ interface IWorkSheetBuilder<T> {
     addDateColumn(name: string, expression: (x: T) => any): IWorkSheetBuilder<T>;
     addColumn(name: string, expression: (x: T) => any, createCell?: (x: any) => ICell): IWorkSheetBuilder<T>;
     setName(name: string): IWorkSheetBuilder<T>;
-    setWorkbook(workbook: IWorkBook): IWorkSheetBuilder<T>;
     build(): IWorkSheet;
 }
 
@@ -29,13 +28,8 @@ class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
         return this;
     }
 
-    setWorkbook(workbook: IWorkBook): IWorkSheetBuilder<T> {
-        this.workbook = workbook;
-        return this;
-    }
-
     build(): IWorkSheet {
-        var worksheet = this.workbook ? this.workbook.addWorkSheet(this.name) : new WorkSheet(this.name, this.xlsx);
+        var worksheet = new WorkSheet(this.name, this.xlsx);
 
         for (let colIdx = 0; colIdx < this.columns.length; colIdx++) {
             let column = this.columns[colIdx];
@@ -55,6 +49,5 @@ class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
     }
 
     private name: string;
-    private workbook: IWorkBook;
     private columns: { name: string, expression: (x: T) => any, createCell?: (x: any) => ICell }[];
 }

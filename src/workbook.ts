@@ -1,5 +1,5 @@
 interface IWorkBook {
-    addWorkSheet(ws: string | WorkSheet): IWorkSheet;
+    addWorkSheet(ws: string | IWorkSheet): IWorkSheet;
 
 }
 
@@ -9,7 +9,7 @@ class WorkBook implements IWorkBook {
         this['Sheets'] = {};
     }
 
-    addWorkSheet(worksheet: string | WorkSheet): IWorkSheet {
+    addWorkSheet(worksheet: string | IWorkSheet): IWorkSheet {
         if (typeof worksheet == "string")
             worksheet = new WorkSheet(worksheet, this.xlsx);
 

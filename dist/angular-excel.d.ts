@@ -46,12 +46,12 @@ declare class WorkSheet implements IWorkSheet {
     getCell(row: number, col: number): ICell;
 }
 interface IWorkBook {
-    addWorkSheet(ws: string | WorkSheet): IWorkSheet;
+    addWorkSheet(ws: string | IWorkSheet): IWorkSheet;
 }
 declare class WorkBook implements IWorkBook {
     private xlsx;
     constructor(xlsx: any);
-    addWorkSheet(worksheet: string | WorkSheet): IWorkSheet;
+    addWorkSheet(worksheet: string | IWorkSheet): IWorkSheet;
     private _sheetNames;
     private _sheets;
 }
@@ -59,7 +59,6 @@ interface IWorkSheetBuilder<T> {
     addDateColumn(name: string, expression: (x: T) => any): IWorkSheetBuilder<T>;
     addColumn(name: string, expression: (x: T) => any, createCell?: (x: any) => ICell): IWorkSheetBuilder<T>;
     setName(name: string): IWorkSheetBuilder<T>;
-    setWorkbook(workbook: IWorkBook): IWorkSheetBuilder<T>;
     build(): IWorkSheet;
 }
 declare class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
@@ -69,10 +68,8 @@ declare class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
     addDateColumn(name: string, expression: (x: T) => any): IWorkSheetBuilder<T>;
     addColumn(name: string, expression: (x: T) => any, createCell?: (x: any) => ICell): IWorkSheetBuilder<T>;
     setName(name: string): IWorkSheetBuilder<T>;
-    setWorkbook(workbook: IWorkBook): IWorkSheetBuilder<T>;
     build(): IWorkSheet;
     private name;
-    private workbook;
     private columns;
 }
 interface IExcelConverter {
