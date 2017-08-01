@@ -55,21 +55,6 @@ declare class WorkBook implements IWorkBook {
     private _sheetNames;
     private _sheets;
 }
-interface IExcelConverter {
-    create(): IWorkBook;
-    createBuilder<T>(values: T[]): WorkSheetBuilder<T>;
-    saveAs(name: string, workbook: IWorkBook): any;
-}
-declare class ExcelConverter implements IExcelConverter {
-    private _saveAs;
-    private xlsx;
-    static $inject: string[];
-    constructor(_saveAs: any, xlsx: any);
-    create(): IWorkBook;
-    createBuilder<T>(values: T[]): WorkSheetBuilder<T>;
-    saveAs(name: string, workbook: IWorkBook): void;
-    private convertToBinary(workbook);
-}
 interface IWorkSheetBuilder<T> {
     addDateColumn(name: string, expression: (x: T) => any): IWorkSheetBuilder<T>;
     addColumn(name: string, expression: (x: T) => any, createCell?: (x: any) => ICell): IWorkSheetBuilder<T>;
@@ -89,4 +74,19 @@ declare class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
     private name;
     private workbook;
     private columns;
+}
+interface IExcelConverter {
+    create(): IWorkBook;
+    createBuilder<T>(values: T[]): WorkSheetBuilder<T>;
+    saveAs(name: string, workbook: IWorkBook): any;
+}
+declare class ExcelConverter implements IExcelConverter {
+    private _saveAs;
+    private xlsx;
+    static $inject: string[];
+    constructor(_saveAs: any, xlsx: any);
+    create(): IWorkBook;
+    createBuilder<T>(values: T[]): WorkSheetBuilder<T>;
+    saveAs(name: string, workbook: IWorkBook): void;
+    private convertToBinary(workbook);
 }
