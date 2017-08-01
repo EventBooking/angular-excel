@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "declaration": true,
+        "noImplicitAny": false,
+        "noEmitOnError": true,
+        "removeComments": false,
+        "inlineSourceMap": true,
+        "inlineSources": true,
+        "target": "es5",
+        "out": "dist/angular-excel.js"
+    },
+    "files": [
+        "typings/browser.d.ts",
+        "src/app.ts",
+        "src/cellAddress.ts",
+        "src/cellRange.ts",
+        "src/cell.ts",
+        "src/worksheet.ts",
+        "src/workbook.ts",
+        "src/excelConverter.ts"
+    ]
+}

@@ -1,0 +1,33 @@
+{
+  "name": "angular-excel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/angular-excel.js",
+  "typings": "./dist/angular-excel.d.ts",
+  "scripts": {
+    "postinstall": "typings install",
+    "tsc": "tsc",
+    "tsc:w": "tsc -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EventBooking/angular-excel.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EventBooking/angular-excel/issues"
+  },
+  "homepage": "https://github.com/EventBooking/angular-excel#readme",
+  "dependencies": {
+    "angular": "^1.4.9",
+    "jquery": "^2.1.4",
+    "angular-typescript-module": "github:eventbooking/angular-typescript-module#v2.0.1",
+    "xlsx": "^0.8.0",
+    "file-saver": "^1.3.3"
+  },
+  "devDependencies": {
+    "typescript": "^2.2.1",
+    "typings": "0.7.9"
+  }
+}
