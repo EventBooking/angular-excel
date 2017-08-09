@@ -13,6 +13,11 @@ class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
         this.columns = [];
     }
 
+    addTimeColumn(name: string, expression: (x: T) => any, format: string): IWorkSheetBuilder<T> {
+        this.columns.push({ name: name, expression: expression, createCell: x => new TimeCell(x, format) });
+        return this;
+    }
+
     addDateColumn(name: string, expression: (x: T) => any): IWorkSheetBuilder<T> {
         this.columns.push({ name: name, expression: expression, createCell: x => new DateCell(x) });
         return this;

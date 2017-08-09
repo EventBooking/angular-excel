@@ -45,7 +45,24 @@ declare class Cell implements ICell {
     s: string;
 }
 declare class DateCell implements ICell {
-    constructor(value?: any, formattedText?: string);
+    constructor(value?: any);
+    v: any;
+    w: string;
+    t: string;
+    f: string;
+    F: string;
+    r: string;
+    h: string;
+    c: string;
+    z: string;
+    l: string;
+    s: string;
+}
+declare class TimeCell implements ICell {
+    private static SECONDS_IN_DAY;
+    private static SECONDS_IN_HOUR;
+    private static SECONDS_IN_MINUTE;
+    constructor(isoTime: string, format: string);
     v: any;
     w: string;
     t: string;
@@ -59,7 +76,7 @@ declare class DateCell implements ICell {
     s: string;
 }
 declare class StringCell implements ICell {
-    constructor(value?: any, formattedText?: string);
+    constructor(value?: any);
     v: any;
     w: string;
     t: string;
@@ -105,6 +122,7 @@ declare class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
     private xlsx;
     private values;
     constructor(xlsx: any, values: T[]);
+    addTimeColumn(name: string, expression: (x: T) => any, format: string): IWorkSheetBuilder<T>;
     addDateColumn(name: string, expression: (x: T) => any): IWorkSheetBuilder<T>;
     addColumn(name: string, expression: (x: T) => any, createCell?: (x: any) => ICell): IWorkSheetBuilder<T>;
     setName(name: string): IWorkSheetBuilder<T>;

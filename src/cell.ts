@@ -29,12 +29,45 @@ class Cell implements ICell {
 }
 
 class DateCell implements ICell {
-    constructor(value?: any, format?: string) {
+    constructor(value?: any) {
         if (value == null)
             return;
 
         this.v = value;
         this.t = 'd';
+    }
+
+    v: any;
+    w: string;
+    t: string;
+    f: string;
+    F: string;
+    r: string;
+    h: string;
+    c: string;
+    z: string;
+    l: string;
+    s: string;
+}
+
+class TimeCell implements ICell {
+    private static SECONDS_IN_DAY = 86400;
+    private static SECONDS_IN_HOUR = 3600;
+    private static SECONDS_IN_MINUTE = 60;
+
+    constructor(isoTime: string, format: string) {
+        if (isoTime == null)
+            return;
+
+        const values = isoTime.split(":");
+        const hourSeconds = Number(values[0]) * TimeCell.SECONDS_IN_HOUR;
+        const minuteSeconds = Number(values[1]) * TimeCell.SECONDS_IN_MINUTE;
+        const seconds = Number(values[2]);
+        const totalSeconds = hourSeconds + minuteSeconds + seconds;
+        const value = totalSeconds / TimeCell.SECONDS_IN_DAY;
+
+        this.v = value;
+        this.t = 'n';
         this.z = format;
     }
 
