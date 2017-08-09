@@ -113,7 +113,7 @@ declare class WorkBook implements IWorkBook {
     private _sheets;
 }
 interface IWorkSheetBuilder<T> {
-    addTimeColumn(name: string, expression: (x: T) => any, format: string): IWorkSheetBuilder<T>;
+    addTimeColumn(name: string, expression: (x: T) => any, format?: string): IWorkSheetBuilder<T>;
     addDateColumn(name: string, expression: (x: T) => any): IWorkSheetBuilder<T>;
     addColumn(name: string, expression: (x: T) => any, createCell?: (x: any) => ICell): IWorkSheetBuilder<T>;
     setName(name: string): IWorkSheetBuilder<T>;
@@ -123,7 +123,7 @@ declare class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
     private xlsx;
     private values;
     constructor(xlsx: any, values: T[]);
-    addTimeColumn(name: string, expression: (x: T) => any, format: string): IWorkSheetBuilder<T>;
+    addTimeColumn(name: string, expression: (x: T) => any, format?: string): IWorkSheetBuilder<T>;
     addDateColumn(name: string, expression: (x: T) => any): IWorkSheetBuilder<T>;
     addColumn(name: string, expression: (x: T) => any, createCell?: (x: any) => ICell): IWorkSheetBuilder<T>;
     setName(name: string): IWorkSheetBuilder<T>;
