@@ -1,4 +1,5 @@
 interface IWorkSheetBuilder<T> {
+    addTimeColumn(name: string, expression: (x: T) => any, format: string): IWorkSheetBuilder<T>
     addDateColumn(name: string, expression: (x: T) => any): IWorkSheetBuilder<T>;
     addColumn(name: string, expression: (x: T) => any, createCell?: (x: any) => ICell): IWorkSheetBuilder<T>;
     setName(name: string): IWorkSheetBuilder<T>;
