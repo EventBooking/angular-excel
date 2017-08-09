@@ -55,7 +55,7 @@ class TimeCell implements ICell {
     private static SECONDS_IN_HOUR = 3600;
     private static SECONDS_IN_MINUTE = 60;
 
-    constructor(isoTime: string, format: string) {
+    constructor(isoTime: string, format: string = "h:mm AM/PM") {
         if (isoTime == null)
             return;
 

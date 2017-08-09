@@ -62,7 +62,7 @@ declare class TimeCell implements ICell {
     private static SECONDS_IN_DAY;
     private static SECONDS_IN_HOUR;
     private static SECONDS_IN_MINUTE;
-    constructor(isoTime: string, format: string);
+    constructor(isoTime: string, format?: string);
     v: any;
     w: string;
     t: string;
