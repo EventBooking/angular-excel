@@ -1,5 +1,5 @@
 interface IWorkSheetBuilder<T> {
-    addTimeColumn(name: string, expression: (x: T) => any, format: string): IWorkSheetBuilder<T>
+    addTimeColumn(name: string, expression: (x: T) => any, format?: string): IWorkSheetBuilder<T>
     addDateColumn(name: string, expression: (x: T) => any): IWorkSheetBuilder<T>;
     addColumn(name: string, expression: (x: T) => any, createCell?: (x: any) => ICell): IWorkSheetBuilder<T>;
     setName(name: string): IWorkSheetBuilder<T>;
@@ -14,7 +14,7 @@ class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
         this.columns = [];
     }
 
-    addTimeColumn(name: string, expression: (x: T) => any, format: string): IWorkSheetBuilder<T> {
+    addTimeColumn(name: string, expression: (x: T) => any, format?: string): IWorkSheetBuilder<T> {
         this.columns.push({ name: name, expression: expression, createCell: x => new TimeCell(x, format) });
         return this;
     }
