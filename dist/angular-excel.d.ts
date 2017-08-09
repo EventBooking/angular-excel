@@ -20,17 +20,57 @@ declare class CellRange implements ICellRange {
 }
 interface ICell {
     v: any;
+    w: string;
     t: string;
+    f: string;
+    F: string;
+    r: string;
+    h: string;
+    c: string;
+    z: string;
+    l: string;
+    s: string;
+}
+declare class Cell implements ICell {
+    v: any;
+    w: string;
+    t: string;
+    f: string;
+    F: string;
+    r: string;
+    h: string;
+    c: string;
+    z: string;
+    l: string;
+    s: string;
 }
 declare class DateCell implements ICell {
-    constructor(value?: any);
+    constructor(value?: any, formattedText?: string);
     v: any;
+    w: string;
     t: string;
+    f: string;
+    F: string;
+    r: string;
+    h: string;
+    c: string;
+    z: string;
+    l: string;
+    s: string;
 }
 declare class StringCell implements ICell {
-    constructor(value?: any);
+    constructor(value?: any, formattedText?: string);
     v: any;
+    w: string;
     t: string;
+    f: string;
+    F: string;
+    r: string;
+    h: string;
+    c: string;
+    z: string;
+    l: string;
+    s: string;
 }
 interface IWorkSheet {
     name: string;
