@@ -29,13 +29,13 @@ class Cell implements ICell {
 }
 
 class DateCell implements ICell {
-    constructor(value?: any, formattedText?: string) {
+    constructor(value?: any, format?: string) {
         if (value == null)
             return;
 
         this.v = value;
         this.t = 'd';
-        this.w = formattedText;
+        this.z = format;
     }
 
     v: any;
@@ -52,13 +52,12 @@ class DateCell implements ICell {
 }
 
 class StringCell implements ICell {
-    constructor(value?: any, formattedText?: string) {
+    constructor(value?: any) {
         if (value == null)
             return;
 
         this.v = value;
         this.t = 's';
-        this.w = formattedText;
     }
 
     v: any;
