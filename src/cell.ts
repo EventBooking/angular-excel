@@ -84,6 +84,28 @@ class TimeCell implements ICell {
     s: string;
 }
 
+class NumberCell implements ICell {
+    constructor(value?: any) {
+        if (value == null)
+            return;
+
+        this.v = value;
+        this.t = 'n';
+    }
+
+    v: any;
+    w: string;
+    t: string;
+    f: string;
+    F: string;
+    r: string;
+    h: string;
+    c: string;
+    z: string;
+    l: string;
+    s: string;
+}
+
 class StringCell implements ICell {
     constructor(value?: any) {
         if (value == null)

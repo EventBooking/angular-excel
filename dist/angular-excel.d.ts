@@ -75,6 +75,20 @@ declare class TimeCell implements ICell {
     l: string;
     s: string;
 }
+declare class NumberCell implements ICell {
+    constructor(value?: any);
+    v: any;
+    w: string;
+    t: string;
+    f: string;
+    F: string;
+    r: string;
+    h: string;
+    c: string;
+    z: string;
+    l: string;
+    s: string;
+}
 declare class StringCell implements ICell {
     constructor(value?: any);
     v: any;
@@ -115,6 +129,7 @@ declare class WorkBook implements IWorkBook {
 interface IWorkSheetBuilder<T> {
     addTimeColumn(name: string, expression: (x: T) => any, format?: string): IWorkSheetBuilder<T>;
     addDateColumn(name: string, expression: (x: T) => any): IWorkSheetBuilder<T>;
+    addNumberColumn(name: string, expression: (x: T) => any): IWorkSheetBuilder<T>;
     addColumn(name: string, expression: (x: T) => any, createCell?: (x: any) => ICell): IWorkSheetBuilder<T>;
     setName(name: string): IWorkSheetBuilder<T>;
     build(): IWorkSheet;
@@ -125,6 +140,7 @@ declare class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
     constructor(xlsx: any, values: T[]);
     addTimeColumn(name: string, expression: (x: T) => any, format?: string): IWorkSheetBuilder<T>;
     addDateColumn(name: string, expression: (x: T) => any): IWorkSheetBuilder<T>;
+    addNumberColumn(name: string, expression: (x: T) => any): IWorkSheetBuilder<T>;
     addColumn(name: string, expression: (x: T) => any, createCell?: (x: any) => ICell): IWorkSheetBuilder<T>;
     setName(name: string): IWorkSheetBuilder<T>;
     build(): IWorkSheet;
