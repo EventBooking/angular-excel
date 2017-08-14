@@ -45,7 +45,7 @@ declare class Cell implements ICell {
     s: string;
 }
 declare class DateCell implements ICell {
-    constructor(value?: any);
+    constructor(value: any);
     v: any;
     w: string;
     t: string;
@@ -132,19 +132,23 @@ interface IWorkSheetBuilder<T> {
     addNumberColumn(name: string, expression: (x: T) => any): IWorkSheetBuilder<T>;
     addColumn(name: string, expression: (x: T) => any, createCell?: (x: any) => ICell): IWorkSheetBuilder<T>;
     setName(name: string): IWorkSheetBuilder<T>;
+    setTimeZone(timeZone: string): IWorkSheetBuilder<T>;
     build(): IWorkSheet;
 }
 declare class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
     private xlsx;
+    private moment;
     private values;
-    constructor(xlsx: any, values: T[]);
+    constructor(xlsx: any, moment: any, values: T[]);
     addTimeColumn(name: string, expression: (x: T) => any, format?: string): IWorkSheetBuilder<T>;
     addDateColumn(name: string, expression: (x: T) => any): IWorkSheetBuilder<T>;
     addNumberColumn(name: string, expression: (x: T) => any): IWorkSheetBuilder<T>;
     addColumn(name: string, expression: (x: T) => any, createCell?: (x: any) => ICell): IWorkSheetBuilder<T>;
+    setTimeZone(timeZone: string): IWorkSheetBuilder<T>;
     setName(name: string): IWorkSheetBuilder<T>;
     build(): IWorkSheet;
     private name;
+    private timeZone;
     private columns;
 }
 interface IExcelConverter {
@@ -155,8 +159,9 @@ interface IExcelConverter {
 declare class ExcelConverter implements IExcelConverter {
     private _saveAs;
     private xlsx;
+    private moment;
     static $inject: string[];
-    constructor(_saveAs: any, xlsx: any);
+    constructor(_saveAs: any, xlsx: any, moment: any);
     create(): IWorkBook;
     createBuilder<T>(values: T[]): WorkSheetBuilder<T>;
     saveAs(name: string, workbook: IWorkBook): void;

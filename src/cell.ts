@@ -29,7 +29,7 @@ class Cell implements ICell {
 }
 
 class DateCell implements ICell {
-    constructor(value?: any) {
+    constructor(value: any) {
         if (value == null)
             return;
 

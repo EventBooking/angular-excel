@@ -4,12 +4,14 @@ interface IWorkSheetBuilder<T> {
     addNumberColumn(name: string, expression: (x: T) => any): IWorkSheetBuilder<T>
     addColumn(name: string, expression: (x: T) => any, createCell?: (x: any) => ICell): IWorkSheetBuilder<T>;
     setName(name: string): IWorkSheetBuilder<T>;
+    setTimeZone(timeZone: string): IWorkSheetBuilder<T>;
     build(): IWorkSheet;
 }
 
 class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
     constructor(
         private xlsx: any,
+        private moment: any,
         private values: T[]
     ) {
         this.columns = [];
@@ -21,7 +23,14 @@ class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
     }
 
     addDateColumn(name: string, expression: (x: T) => any): IWorkSheetBuilder<T> {
-        this.columns.push({ name: name, expression: expression, createCell: x => new DateCell(x) });
+        this.columns.push({
+            name: name,
+            expression: expression,
+            createCell: x => {
+                let value = !this.timeZone ? x : this.moment(x, 'YYYY-MM-DD').tz(this.timeZone).format('YYYY-MM-DD HH:mm:ss');
+                return new DateCell(value);
+            }
+        });
         return this;
     }
 
@@ -32,6 +41,11 @@ class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
 
     addColumn(name: string, expression: (x: T) => any, createCell?: (x: any) => ICell): IWorkSheetBuilder<T> {
         this.columns.push({ name: name, expression: expression, createCell: createCell });
+        return this;
+    }
+
+    setTimeZone(timeZone: string): IWorkSheetBuilder<T> {
+        this.timeZone = timeZone;
         return this;
     }
 
@@ -61,5 +75,6 @@ class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
     }
 
     private name: string;
+    private timeZone: string;
     private columns: { name: string, expression: (x: T) => any, createCell?: (x: any) => ICell }[];
 }
