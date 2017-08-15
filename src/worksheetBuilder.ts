@@ -52,9 +52,9 @@ class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
 
     addCurrencyColumn(name: string, expression: (x: T) => any, getCurrency?: (x: T) => string): IWorkSheetBuilder<T> {
         this.columns.push({
-            name: name, expression: expression, createCell: x => {
+            name: name, expression: expression, createCell: (value, x) => {
                 var format = getCurrency ? this.getCurrencyFormat(getCurrency(x)) : this.currencyFormat;
-                return new CurrencyCell(x, format);
+                return new CurrencyCell(value, format);
             }
         });
         return this;
@@ -92,7 +92,7 @@ class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
             for (let colIdx = 0; colIdx < this.columns.length; colIdx++) {
                 var column = this.columns[colIdx];
                 const value = column.expression(x);
-                const cell = column.createCell ? column.createCell(value) : null;
+                const cell = column.createCell ? column.createCell(value, x) : null;
                 worksheet.setCell(rowIdx + 1, colIdx, value, cell);
             }
         });
@@ -103,5 +103,5 @@ class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
     private name: string;
     private timeZone: string;
     private currencyFormat: string;
-    private columns: { name: string, expression: (x: T) => any, createCell?: (x: any) => ICell }[];
+    private columns: { name: string, expression: (x: T) => any, createCell?: (value: any, x: T) => ICell }[];
 }
