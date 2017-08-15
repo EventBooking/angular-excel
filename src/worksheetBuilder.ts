@@ -14,7 +14,7 @@ class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
     constructor(
         private xlsx: any,
         private moment: any,
-        private currency: any, 
+        private currency: any,
         private accounting: any,
         private values: T[]
     ) {
@@ -43,8 +43,20 @@ class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
         return this;
     }
 
-    addCurrencyColumn(name: string, expression: (x: T) => any): IWorkSheetBuilder<T> {
-        this.columns.push({ name: name, expression: expression, createCell: x => new CurrencyCell(x, this.currencyFormat) });
+    private getCurrencyFormat(currency: string): string {
+        const currencySymbol = this.currency.symbolize(currency);
+        const currencySettings = this.accounting.settings.currency;
+        var currencyFormat = `${currencySymbol}#${currencySettings.thousand}##0${currencySettings.decimal}00`;
+        return currencyFormat;
+    }
+
+    addCurrencyColumn(name: string, expression: (x: T) => any, getCurrency?: (x: T) => string): IWorkSheetBuilder<T> {
+        this.columns.push({
+            name: name, expression: expression, createCell: x => {
+                var format = getCurrency ? this.getCurrencyFormat(getCurrency(x)) : this.currencyFormat;
+                return new CurrencyCell(x, format);
+            }
+        });
         return this;
     }
 
@@ -59,9 +71,7 @@ class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
     }
 
     setCurrency(currency: string): IWorkSheetBuilder<T> {
-        const currencySymbol = this.currency.symbolize(currency);
-        const currencySettings = this.accounting.settings.currency;
-        this.currencyFormat = `${currencySymbol}#${currencySettings.thousand}##0${currencySettings.decimal}00`;
+        this.currencyFormat = this.getCurrencyFormat(currency)
         return this;
     }
 
