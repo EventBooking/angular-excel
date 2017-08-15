@@ -50,6 +50,29 @@ class DateCell implements ICell {
     s: string;
 }
 
+class CurrencyCell implements ICell {
+    constructor(value: string, format: string) {
+        if (value == null)
+            return;
+
+        this.v = value;
+        this.t = 'n';
+        this.z = format;
+    }
+
+    v: any;
+    w: string;
+    t: string;
+    f: string;
+    F: string;
+    r: string;
+    h: string;
+    c: string;
+    z: string;
+    l: string;
+    s: string;
+}
+
 class TimeCell implements ICell {
     private static SECONDS_IN_DAY = 86400;
     private static SECONDS_IN_HOUR = 3600;

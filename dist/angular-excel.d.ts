@@ -58,6 +58,20 @@ declare class DateCell implements ICell {
     l: string;
     s: string;
 }
+declare class CurrencyCell implements ICell {
+    constructor(value: string, format: string);
+    v: any;
+    w: string;
+    t: string;
+    f: string;
+    F: string;
+    r: string;
+    h: string;
+    c: string;
+    z: string;
+    l: string;
+    s: string;
+}
 declare class TimeCell implements ICell {
     private static SECONDS_IN_DAY;
     private static SECONDS_IN_HOUR;
@@ -130,25 +144,32 @@ interface IWorkSheetBuilder<T> {
     addTimeColumn(name: string, expression: (x: T) => any, format?: string): IWorkSheetBuilder<T>;
     addDateColumn(name: string, expression: (x: T) => any): IWorkSheetBuilder<T>;
     addNumberColumn(name: string, expression: (x: T) => any): IWorkSheetBuilder<T>;
+    addCurrencyColumn(name: string, expression: (x: T) => any): IWorkSheetBuilder<T>;
     addColumn(name: string, expression: (x: T) => any, createCell?: (x: any) => ICell): IWorkSheetBuilder<T>;
     setName(name: string): IWorkSheetBuilder<T>;
     setTimeZone(timeZone: string): IWorkSheetBuilder<T>;
+    setCurrency(currencyFormat: string): IWorkSheetBuilder<T>;
     build(): IWorkSheet;
 }
 declare class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
     private xlsx;
     private moment;
+    private currency;
+    private accounting;
     private values;
-    constructor(xlsx: any, moment: any, values: T[]);
+    constructor(xlsx: any, moment: any, currency: any, accounting: any, values: T[]);
     addTimeColumn(name: string, expression: (x: T) => any, format?: string): IWorkSheetBuilder<T>;
     addDateColumn(name: string, expression: (x: T) => any): IWorkSheetBuilder<T>;
     addNumberColumn(name: string, expression: (x: T) => any): IWorkSheetBuilder<T>;
+    addCurrencyColumn(name: string, expression: (x: T) => any): IWorkSheetBuilder<T>;
     addColumn(name: string, expression: (x: T) => any, createCell?: (x: any) => ICell): IWorkSheetBuilder<T>;
     setTimeZone(timeZone: string): IWorkSheetBuilder<T>;
+    setCurrency(currency: string): IWorkSheetBuilder<T>;
     setName(name: string): IWorkSheetBuilder<T>;
     build(): IWorkSheet;
     private name;
     private timeZone;
+    private currencyFormat;
     private columns;
 }
 interface IExcelConverter {
@@ -160,8 +181,10 @@ declare class ExcelConverter implements IExcelConverter {
     private _saveAs;
     private xlsx;
     private moment;
+    private currency;
+    private accounting;
     static $inject: string[];
-    constructor(_saveAs: any, xlsx: any, moment: any);
+    constructor(_saveAs: any, xlsx: any, moment: any, currency: any, accounting: any);
     create(): IWorkBook;
     createBuilder<T>(values: T[]): WorkSheetBuilder<T>;
     saveAs(name: string, workbook: IWorkBook): void;

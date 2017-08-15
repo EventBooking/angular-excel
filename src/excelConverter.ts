@@ -6,9 +6,9 @@ interface IExcelConverter {
 
 class ExcelConverter implements IExcelConverter {
 
-    static $inject = ['saveAs', 'XLSX', 'moment'];
+    static $inject = ['saveAs', 'XLSX', 'moment', 'currency', 'accounting'];
 
-    constructor(private _saveAs: any, private xlsx: any, private moment: any) {
+    constructor(private _saveAs: any, private xlsx: any, private moment: any, private currency: any, private accounting: any) {
 
     }
 
@@ -18,7 +18,7 @@ class ExcelConverter implements IExcelConverter {
     }
 
     createBuilder<T>(values: T[]): WorkSheetBuilder<T> {
-        const builder = new WorkSheetBuilder(this.xlsx, this.moment, values);
+        const builder = new WorkSheetBuilder(this.xlsx, this.moment, this.currency, this.accounting, values);
         return builder;
     }
 

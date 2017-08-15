@@ -2,9 +2,11 @@ interface IWorkSheetBuilder<T> {
     addTimeColumn(name: string, expression: (x: T) => any, format?: string): IWorkSheetBuilder<T>
     addDateColumn(name: string, expression: (x: T) => any): IWorkSheetBuilder<T>;
     addNumberColumn(name: string, expression: (x: T) => any): IWorkSheetBuilder<T>
+    addCurrencyColumn(name: string, expression: (x: T) => any): IWorkSheetBuilder<T>
     addColumn(name: string, expression: (x: T) => any, createCell?: (x: any) => ICell): IWorkSheetBuilder<T>;
     setName(name: string): IWorkSheetBuilder<T>;
     setTimeZone(timeZone: string): IWorkSheetBuilder<T>;
+    setCurrency(currencyFormat: string): IWorkSheetBuilder<T>;
     build(): IWorkSheet;
 }
 
@@ -12,6 +14,8 @@ class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
     constructor(
         private xlsx: any,
         private moment: any,
+        private currency: any, 
+        private accounting: any,
         private values: T[]
     ) {
         this.columns = [];
@@ -39,6 +43,11 @@ class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
         return this;
     }
 
+    addCurrencyColumn(name: string, expression: (x: T) => any): IWorkSheetBuilder<T> {
+        this.columns.push({ name: name, expression: expression, createCell: x => new CurrencyCell(x, this.currencyFormat) });
+        return this;
+    }
+
     addColumn(name: string, expression: (x: T) => any, createCell?: (x: any) => ICell): IWorkSheetBuilder<T> {
         this.columns.push({ name: name, expression: expression, createCell: createCell });
         return this;
@@ -46,6 +55,13 @@ class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
 
     setTimeZone(timeZone: string): IWorkSheetBuilder<T> {
         this.timeZone = timeZone;
+        return this;
+    }
+
+    setCurrency(currency: string): IWorkSheetBuilder<T> {
+        const currencySymbol = this.currency.symbolize(currency);
+        const currencySettings = this.accounting.settings.currency;
+        this.currencyFormat = `${currencySymbol}#${currencySettings.thousand}##0${currencySettings.decimal}00`;
         return this;
     }
 
@@ -76,5 +92,6 @@ class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
 
     private name: string;
     private timeZone: string;
+    private currencyFormat: string;
     private columns: { name: string, expression: (x: T) => any, createCell?: (x: any) => ICell }[];
 }
