@@ -2,7 +2,7 @@ interface IWorkSheetBuilder<T> {
     addTimeColumn(name: string, expression: (x: T) => any, format?: string): IWorkSheetBuilder<T>
     addDateColumn(name: string, expression: (x: T) => any): IWorkSheetBuilder<T>;
     addNumberColumn(name: string, expression: (x: T) => any): IWorkSheetBuilder<T>
-    addCurrencyColumn(name: string, expression: (x: T) => any): IWorkSheetBuilder<T>
+    addCurrencyColumn(name: string, expression: (x: T) => any, getCurrency?: (x: T) => string): IWorkSheetBuilder<T>
     addColumn(name: string, expression: (x: T) => any, createCell?: (x: any) => ICell): IWorkSheetBuilder<T>;
     setName(name: string): IWorkSheetBuilder<T>;
     setTimeZone(timeZone: string): IWorkSheetBuilder<T>;
