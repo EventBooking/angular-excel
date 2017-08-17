@@ -31,7 +31,9 @@ class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
             name: name,
             expression: expression,
             createCell: x => {
-                let value = !this.timeZone ? x : this.moment(x, 'YYYY-MM-DD').tz(this.timeZone).format('YYYY-MM-DD HH:mm:ss');
+                let value = x;
+                if(this.timeZone && x != null)
+                    value = this.moment(x, 'YYYY-MM-DD').tz(this.timeZone).format('YYYY-MM-DD HH:mm:ss');
                 return new DateCell(value);
             }
         });
