@@ -30,10 +30,7 @@ class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
         this.columns.push({
             name: name,
             expression: expression,
-            createCell: x => {
-                let value = (x != null) ? this.moment(x, 'YYYY-MM-DD').format('YYYY-MM-DD HH:mm:ss') : x;
-                return new DateCell(value);
-            }
+            createCell: x => new DateCell(x)
         });
         return this;
     }

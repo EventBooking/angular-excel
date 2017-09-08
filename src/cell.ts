@@ -29,11 +29,11 @@ class Cell implements ICell {
 }
 
 class DateCell implements ICell {
-    constructor(value: any) {
-        if (value == null)
+    constructor(isoDate: any) {
+        if (isoDate == null)
             return;
 
-        this.v = value;
+        this.v = isoDate;
         this.t = 'd';
     }
 
