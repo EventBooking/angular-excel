@@ -45,7 +45,7 @@ declare class Cell implements ICell {
     s: string;
 }
 declare class DateCell implements ICell {
-    constructor(value: any);
+    constructor(isoDate: any);
     v: any;
     w: string;
     t: string;
@@ -147,7 +147,6 @@ interface IWorkSheetBuilder<T> {
     addCurrencyColumn(name: string, expression: (x: T) => any, getCurrency?: (x: T) => string): IWorkSheetBuilder<T>;
     addColumn(name: string, expression: (x: T) => any, createCell?: (x: any) => ICell): IWorkSheetBuilder<T>;
     setName(name: string): IWorkSheetBuilder<T>;
-    setTimeZone(timeZone: string): IWorkSheetBuilder<T>;
     setCurrency(currencyFormat: string): IWorkSheetBuilder<T>;
     build(): IWorkSheet;
 }
@@ -164,12 +163,10 @@ declare class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
     private getCurrencyFormat(currency);
     addCurrencyColumn(name: string, expression: (x: T) => any, getCurrency?: (x: T) => string): IWorkSheetBuilder<T>;
     addColumn(name: string, expression: (x: T) => any, createCell?: (x: any) => ICell): IWorkSheetBuilder<T>;
-    setTimeZone(timeZone: string): IWorkSheetBuilder<T>;
     setCurrency(currency: string): IWorkSheetBuilder<T>;
     setName(name: string): IWorkSheetBuilder<T>;
     build(): IWorkSheet;
     private name;
-    private timeZone;
     private currencyFormat;
     private columns;
 }

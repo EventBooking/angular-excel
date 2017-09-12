@@ -5,7 +5,6 @@ interface IWorkSheetBuilder<T> {
     addCurrencyColumn(name: string, expression: (x: T) => any, getCurrency?: (x: T) => string): IWorkSheetBuilder<T>
     addColumn(name: string, expression: (x: T) => any, createCell?: (x: any) => ICell): IWorkSheetBuilder<T>;
     setName(name: string): IWorkSheetBuilder<T>;
-    setTimeZone(timeZone: string): IWorkSheetBuilder<T>;
     setCurrency(currencyFormat: string): IWorkSheetBuilder<T>;
     build(): IWorkSheet;
 }
@@ -62,11 +61,6 @@ class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
         return this;
     }
 
-    setTimeZone(timeZone: string): IWorkSheetBuilder<T> {
-        this.timeZone = timeZone;
-        return this;
-    }
-
     setCurrency(currency: string): IWorkSheetBuilder<T> {
         this.currencyFormat = this.getCurrencyFormat(currency)
         return this;
@@ -98,7 +92,6 @@ class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
     }
 
     private name: string;
-    private timeZone: string;
     private currencyFormat: string;
     private columns: { name: string, expression: (x: T) => any, createCell?: (value: any, x: T) => ICell }[];
 }
