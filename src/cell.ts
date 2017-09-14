@@ -33,7 +33,7 @@ class DateCell implements ICell {
         if (isoDate == null)
             return;
 
-        this.v = isoDate;
+        this.v = isoDate.toString();
         this.t = 'd';
     }
 
@@ -55,7 +55,7 @@ class CurrencyCell implements ICell {
         if (value == null)
             return;
 
-        this.v = value;
+        this.v = value.toString();
         this.t = 'n';
         this.z = format;
     }
@@ -82,7 +82,7 @@ class TimeCell implements ICell {
         if (isoTime == null)
             return;
 
-        const values = isoTime.split(":");
+        const values = isoTime.toString().split(":");
         const hourSeconds = Number(values[0]) * TimeCell.SECONDS_IN_HOUR;
         const minuteSeconds = Number(values[1]) * TimeCell.SECONDS_IN_MINUTE;
         const seconds = Number(values[2]);
@@ -134,7 +134,7 @@ class StringCell implements ICell {
         if (value == null)
             return;
 
-        this.v = value;
+        this.v = value.toString();
         this.t = 's';
     }
 
