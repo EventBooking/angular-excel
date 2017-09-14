@@ -1,7 +1,7 @@
 // see: https://github.com/SheetJS/js-xlsx#cell-object
 
 interface ICell {
-    v: any;
+    v: string;
     w: string;
     t: string;
     f: string;
@@ -15,52 +15,15 @@ interface ICell {
 }
 
 class Cell implements ICell {
-    v: any;
-    w: string;
-    t: string;
-    f: string;
-    F: string;
-    r: string;
-    h: string;
-    c: string;
-    z: string;
-    l: string;
-    s: string;
-}
-
-class DateCell implements ICell {
-    constructor(isoDate: string) {
-        if (isoDate == null)
-            return;
-
-        this.v = isoDate;
-        this.t = 'd';
-    }
-
-    v: any;
-    w: string;
-    t: string;
-    f: string;
-    F: string;
-    r: string;
-    h: string;
-    c: string;
-    z: string;
-    l: string;
-    s: string;
-}
-
-class CurrencyCell implements ICell {
-    constructor(value: string, format: string) {
+    protected setValue(value: any, type: string, format?: string) {
         if (value == null)
             return;
-
-        this.v = value;
-        this.t = 'n';
+        this.v = value.toString();
+        this.t = type;
         this.z = format;
     }
 
-    v: any;
+    v: string;
     w: string;
     t: string;
     f: string;
@@ -73,12 +36,32 @@ class CurrencyCell implements ICell {
     s: string;
 }
 
-class TimeCell implements ICell {
+class DateCell extends Cell {
+    constructor(isoDate: string) {
+        super();
+        this.setValue(isoDate, 'd');
+    }
+}
+
+class CurrencyCell extends Cell {
+    constructor(value: string, format: string = "$#,##0.00") {
+        super();
+        this.setValue(value, 'n', format);
+    }
+}
+
+class TimeCell extends Cell {
     private static SECONDS_IN_DAY = 86400;
     private static SECONDS_IN_HOUR = 3600;
     private static SECONDS_IN_MINUTE = 60;
 
     constructor(isoTime: string, format: string = "h:mm AM/PM") {
+        super();
+        const value = TimeCell.formatValue(isoTime);
+        this.setValue(value, 'n', format);
+    }
+
+    private static formatValue(isoTime: string) {
         if (isoTime == null)
             return;
 
@@ -88,65 +71,20 @@ class TimeCell implements ICell {
         const seconds = Number(values[2]);
         const totalSeconds = hourSeconds + minuteSeconds + seconds;
         const value = totalSeconds / TimeCell.SECONDS_IN_DAY;
-
-        this.v = value;
-        this.t = 'n';
-        this.z = format;
+        return value;
     }
-
-    v: any;
-    w: string;
-    t: string;
-    f: string;
-    F: string;
-    r: string;
-    h: string;
-    c: string;
-    z: string;
-    l: string;
-    s: string;
 }
 
-class NumberCell implements ICell {
+class NumberCell extends Cell {
     constructor(value?: any) {
-        if (value == null)
-            return;
-
-        this.v = value;
-        this.t = 'n';
+        super();
+        this.setValue(value, 'n');
     }
-
-    v: any;
-    w: string;
-    t: string;
-    f: string;
-    F: string;
-    r: string;
-    h: string;
-    c: string;
-    z: string;
-    l: string;
-    s: string;
 }
 
-class StringCell implements ICell {
+class StringCell extends Cell {
     constructor(value?: any) {
-        if (value == null)
-            return;
-
-        this.v = value;
-        this.t = 's';
+        super();
+        this.setValue(value, 's');
     }
-
-    v: any;
-    w: string;
-    t: string;
-    f: string;
-    F: string;
-    r: string;
-    h: string;
-    c: string;
-    z: string;
-    l: string;
-    s: string;
 }

@@ -19,7 +19,7 @@ declare class CellRange implements ICellRange {
     addAddress(address: ICellAddress): void;
 }
 interface ICell {
-    v: any;
+    v: string;
     w: string;
     t: string;
     f: string;
@@ -32,7 +32,8 @@ interface ICell {
     s: string;
 }
 declare class Cell implements ICell {
-    v: any;
+    protected setValue(value: any, type: string, format?: string): void;
+    v: string;
     w: string;
     t: string;
     f: string;
@@ -44,78 +45,24 @@ declare class Cell implements ICell {
     l: string;
     s: string;
 }
-declare class DateCell implements ICell {
+declare class DateCell extends Cell {
     constructor(isoDate: string);
-    v: any;
-    w: string;
-    t: string;
-    f: string;
-    F: string;
-    r: string;
-    h: string;
-    c: string;
-    z: string;
-    l: string;
-    s: string;
 }
-declare class CurrencyCell implements ICell {
-    constructor(value: string, format: string);
-    v: any;
-    w: string;
-    t: string;
-    f: string;
-    F: string;
-    r: string;
-    h: string;
-    c: string;
-    z: string;
-    l: string;
-    s: string;
+declare class CurrencyCell extends Cell {
+    constructor(value: string, format?: string);
 }
-declare class TimeCell implements ICell {
+declare class TimeCell extends Cell {
     private static SECONDS_IN_DAY;
     private static SECONDS_IN_HOUR;
     private static SECONDS_IN_MINUTE;
     constructor(isoTime: string, format?: string);
-    v: any;
-    w: string;
-    t: string;
-    f: string;
-    F: string;
-    r: string;
-    h: string;
-    c: string;
-    z: string;
-    l: string;
-    s: string;
+    private static formatValue(isoTime);
 }
-declare class NumberCell implements ICell {
+declare class NumberCell extends Cell {
     constructor(value?: any);
-    v: any;
-    w: string;
-    t: string;
-    f: string;
-    F: string;
-    r: string;
-    h: string;
-    c: string;
-    z: string;
-    l: string;
-    s: string;
 }
-declare class StringCell implements ICell {
+declare class StringCell extends Cell {
     constructor(value?: any);
-    v: any;
-    w: string;
-    t: string;
-    f: string;
-    F: string;
-    r: string;
-    h: string;
-    c: string;
-    z: string;
-    l: string;
-    s: string;
 }
 interface IWorkSheet {
     name: string;
