@@ -26,6 +26,11 @@ function TestController(excelConverter) {
         this.workbook = workbook;
     }
 
+    this.check = function(text) {
+        this.workbook = JSON.parse(text);
+        console.log(text);
+    }
+
     this.download = function() {
         excelConverter.saveAs('test', this.workbook);
     }

@@ -1,7 +1,7 @@
 // see: https://github.com/SheetJS/js-xlsx#cell-object
 
 interface ICell {
-    v: any;
+    v: string;
     w: string;
     t: string;
     f: string;
@@ -15,7 +15,7 @@ interface ICell {
 }
 
 class Cell implements ICell {
-    v: any;
+    v: string;
     w: string;
     t: string;
     f: string;
@@ -29,7 +29,7 @@ class Cell implements ICell {
 }
 
 class DateCell implements ICell {
-    constructor(isoDate: any) {
+    constructor(isoDate: string) {
         if (isoDate == null)
             return;
 
@@ -37,7 +37,7 @@ class DateCell implements ICell {
         this.t = 'd';
     }
 
-    v: any;
+    v: string;
     w: string;
     t: string;
     f: string;
@@ -60,7 +60,7 @@ class CurrencyCell implements ICell {
         this.z = format;
     }
 
-    v: any;
+    v: string;
     w: string;
     t: string;
     f: string;
@@ -89,12 +89,12 @@ class TimeCell implements ICell {
         const totalSeconds = hourSeconds + minuteSeconds + seconds;
         const value = totalSeconds / TimeCell.SECONDS_IN_DAY;
 
-        this.v = value;
+        this.v = value.toString();
         this.t = 'n';
         this.z = format;
     }
 
-    v: any;
+    v: string;
     w: string;
     t: string;
     f: string;
@@ -108,15 +108,15 @@ class TimeCell implements ICell {
 }
 
 class NumberCell implements ICell {
-    constructor(value?: any) {
+    constructor(value: number | string) {
         if (value == null)
             return;
 
-        this.v = value;
+        this.v = value.toString();
         this.t = 'n';
     }
 
-    v: any;
+    v: string;
     w: string;
     t: string;
     f: string;
@@ -130,7 +130,7 @@ class NumberCell implements ICell {
 }
 
 class StringCell implements ICell {
-    constructor(value?: any) {
+    constructor(value: string) {
         if (value == null)
             return;
 
@@ -138,7 +138,7 @@ class StringCell implements ICell {
         this.t = 's';
     }
 
-    v: any;
+    v: string;
     w: string;
     t: string;
     f: string;

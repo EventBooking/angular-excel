@@ -1,7 +1,14 @@
-<form ng-submit="vm.show(vm.date)">
-    <input type="text" ng-model="vm.date">
-    <input type="submit" value="Submit">
-</form>
+<div>
+    <form ng-submit="vm.show(vm.date)">
+        <input type="text" ng-model="vm.date">
+        <input type="submit" value="Submit">
+    </form>
+
+    <form ng-submit="vm.check(vm.text)">
+        <textarea ng-model="vm.text"></textarea>
+        <input type="submit" value="Submit">
+    </form>
+</div>
 
 <div ng-if="vm.workbook">
     <button ng-click="vm.download()">Download</button>

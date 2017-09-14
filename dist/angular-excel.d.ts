@@ -19,7 +19,7 @@ declare class CellRange implements ICellRange {
     addAddress(address: ICellAddress): void;
 }
 interface ICell {
-    v: any;
+    v: string;
     w: string;
     t: string;
     f: string;
@@ -32,7 +32,7 @@ interface ICell {
     s: string;
 }
 declare class Cell implements ICell {
-    v: any;
+    v: string;
     w: string;
     t: string;
     f: string;
@@ -45,8 +45,8 @@ declare class Cell implements ICell {
     s: string;
 }
 declare class DateCell implements ICell {
-    constructor(isoDate: any);
-    v: any;
+    constructor(isoDate: string);
+    v: string;
     w: string;
     t: string;
     f: string;
@@ -60,7 +60,7 @@ declare class DateCell implements ICell {
 }
 declare class CurrencyCell implements ICell {
     constructor(value: string, format: string);
-    v: any;
+    v: string;
     w: string;
     t: string;
     f: string;
@@ -77,7 +77,7 @@ declare class TimeCell implements ICell {
     private static SECONDS_IN_HOUR;
     private static SECONDS_IN_MINUTE;
     constructor(isoTime: string, format?: string);
-    v: any;
+    v: string;
     w: string;
     t: string;
     f: string;
@@ -90,8 +90,8 @@ declare class TimeCell implements ICell {
     s: string;
 }
 declare class NumberCell implements ICell {
-    constructor(value?: any);
-    v: any;
+    constructor(value: number | string);
+    v: string;
     w: string;
     t: string;
     f: string;
@@ -104,8 +104,8 @@ declare class NumberCell implements ICell {
     s: string;
 }
 declare class StringCell implements ICell {
-    constructor(value?: any);
-    v: any;
+    constructor(value: string);
+    v: string;
     w: string;
     t: string;
     f: string;
