@@ -1,7 +1,7 @@
 // see: https://github.com/SheetJS/js-xlsx#cell-object
 
 interface ICell {
-    v: string;
+    v: any;
     w: string;
     t: string;
     f: string;
@@ -15,7 +15,7 @@ interface ICell {
 }
 
 class Cell implements ICell {
-    v: string;
+    v: any;
     w: string;
     t: string;
     f: string;
@@ -33,11 +33,11 @@ class DateCell implements ICell {
         if (isoDate == null)
             return;
 
-        this.v = isoDate.toString();
+        this.v = isoDate;
         this.t = 'd';
     }
 
-    v: string;
+    v: any;
     w: string;
     t: string;
     f: string;
@@ -55,12 +55,12 @@ class CurrencyCell implements ICell {
         if (value == null)
             return;
 
-        this.v = value.toString();
+        this.v = value;
         this.t = 'n';
         this.z = format;
     }
 
-    v: string;
+    v: any;
     w: string;
     t: string;
     f: string;
@@ -82,19 +82,19 @@ class TimeCell implements ICell {
         if (isoTime == null)
             return;
 
-        const values = isoTime.toString().split(":");
+        const values = isoTime.split(":");
         const hourSeconds = Number(values[0]) * TimeCell.SECONDS_IN_HOUR;
         const minuteSeconds = Number(values[1]) * TimeCell.SECONDS_IN_MINUTE;
         const seconds = Number(values[2]);
         const totalSeconds = hourSeconds + minuteSeconds + seconds;
         const value = totalSeconds / TimeCell.SECONDS_IN_DAY;
 
-        this.v = value.toString();
+        this.v = value;
         this.t = 'n';
         this.z = format;
     }
 
-    v: string;
+    v: any;
     w: string;
     t: string;
     f: string;
@@ -108,15 +108,15 @@ class TimeCell implements ICell {
 }
 
 class NumberCell implements ICell {
-    constructor(value: number | string) {
+    constructor(value?: any) {
         if (value == null)
             return;
 
-        this.v = value.toString();
+        this.v = value;
         this.t = 'n';
     }
 
-    v: string;
+    v: any;
     w: string;
     t: string;
     f: string;
@@ -130,15 +130,15 @@ class NumberCell implements ICell {
 }
 
 class StringCell implements ICell {
-    constructor(value: string) {
+    constructor(value?: any) {
         if (value == null)
             return;
 
-        this.v = value.toString();
+        this.v = value;
         this.t = 's';
     }
 
-    v: string;
+    v: any;
     w: string;
     t: string;
     f: string;

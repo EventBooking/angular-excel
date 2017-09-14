@@ -23,7 +23,7 @@ class ExcelConverter implements IExcelConverter {
     }
 
     saveAs(name: string, workbook: IWorkBook) {
-        var wbout = this.xlsx.write(workbook, { bookType: 'xlsx', bookSST: true, type: 'binary' });
+        var wbout = this.xlsx.write(workbook, { bookType: 'xlsx', bookSST: false, type: 'binary' });
         var buffer = this.convertToBinary(wbout);
         this._saveAs(new Blob([buffer], { type: "application/octet-stream" }), `${name}.xlsx`);
     }
