@@ -12,11 +12,13 @@
     "files": [
         "typings/browser.d.ts",
         "src/app.ts",
+        "src/utils.ts",
         "src/cellAddress.ts",
         "src/cellRange.ts",
         "src/cell.ts",
         "src/worksheet.ts",
         "src/workbook.ts",
+        "src/excelBuilder.ts",
         "src/worksheetBuilder.ts",
         "src/excelConverter.ts"
     ]

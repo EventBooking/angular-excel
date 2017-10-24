@@ -10,13 +10,7 @@ interface IWorkSheetBuilder<T> {
 }
 
 class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
-    constructor(
-        private xlsx: any,
-        private moment: any,
-        private currency: any,
-        private accounting: any,
-        private values: T[]
-    ) {
+    constructor(private values: T[]) {
         this.columns = [];
     }
 
@@ -39,17 +33,10 @@ class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
         return this;
     }
 
-    private getCurrencyFormat(currency: string): string {
-        const currencySymbol = this.currency.symbolize(currency);
-        const currencySettings = this.accounting.settings.currency;
-        var currencyFormat = `${currencySymbol}#${currencySettings.thousand}##0${currencySettings.decimal}00`;
-        return currencyFormat;
-    }
-
     addCurrencyColumn(name: string, expression: (x: T) => any, getCurrency?: (x: T) => string): IWorkSheetBuilder<T> {
         this.columns.push({
             name: name, expression: expression, createCell: (value, x) => {
-                var format = getCurrency ? this.getCurrencyFormat(getCurrency(x)) : this.currencyFormat;
+                var format = getCurrency ? ExcelUtils.getCurrencyFormat(getCurrency(x)) : this.currencyFormat;
                 return new CurrencyCell(value, format);
             }
         });
@@ -62,7 +49,7 @@ class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
     }
 
     setCurrency(currency: string): IWorkSheetBuilder<T> {
-        this.currencyFormat = this.getCurrencyFormat(currency)
+        this.currencyFormat = ExcelUtils.getCurrencyFormat(currency)
         return this;
     }
 
@@ -72,7 +59,7 @@ class WorkSheetBuilder<T> implements IWorkSheetBuilder<T> {
     }
 
     build(): IWorkSheet {
-        var worksheet = new WorkSheet(this.name, this.xlsx);
+        var worksheet = new WorkSheet(this.name);
 
         for (let colIdx = 0; colIdx < this.columns.length; colIdx++) {
             let column = this.columns[colIdx];

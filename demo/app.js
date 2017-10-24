@@ -1,6 +1,8 @@
 /* global angular */
 
 function Config() {
+    moment.locale(navigator.language || navigator['userLanguage']);
+    moment.defaultFormat = "YYYY-MM-DDTHH:mm:ss";
 	console.log("configed");
 }
 
@@ -12,7 +14,7 @@ function Run($rootScope, excelConverter) {
 }
 
 function TestController(excelConverter) {
-    this.date = '2017-02-10';
+    this.date = '2017-10-04';
 
 	this.show = function(date) {
         var worksheet = excelConverter.createBuilder([date])

@@ -23,6 +23,10 @@ class Cell implements ICell {
         this.z = format;
     }
 
+    protected setFormat(format?: string) {
+        this.z = format;
+    }
+
     v: string;
     w: string;
     t: string;
@@ -44,34 +48,21 @@ class DateCell extends Cell {
 }
 
 class CurrencyCell extends Cell {
-    constructor(value: string, format: string = "$#,##0.00") {
+    constructor(value: number, format: string = "$#,##0.00") {
         super();
         this.setValue(value, 'n', format);
+    }
+
+    setFormat(format: string) {
+        super.setFormat(format);
     }
 }
 
 class TimeCell extends Cell {
-    private static SECONDS_IN_DAY = 86400;
-    private static SECONDS_IN_HOUR = 3600;
-    private static SECONDS_IN_MINUTE = 60;
-
     constructor(isoTime: string, format: string = "h:mm AM/PM") {
         super();
-        const value = TimeCell.formatValue(isoTime);
+        const value = ExcelUtils.formatTime(isoTime);
         this.setValue(value, 'n', format);
-    }
-
-    private static formatValue(isoTime: string) {
-        if (isoTime == null)
-            return;
-
-        const values = isoTime.split(":");
-        const hourSeconds = Number(values[0]) * TimeCell.SECONDS_IN_HOUR;
-        const minuteSeconds = Number(values[1]) * TimeCell.SECONDS_IN_MINUTE;
-        const seconds = Number(values[2]);
-        const totalSeconds = hourSeconds + minuteSeconds + seconds;
-        const value = totalSeconds / TimeCell.SECONDS_IN_DAY;
-        return value;
     }
 }
 

@@ -5,7 +5,7 @@ interface IWorkSheet {
 }
 
 class WorkSheet implements IWorkSheet {
-    constructor(public name, private xlsx: any) {
+    constructor(public name) {
         this._range = new CellRange();
     }
 
@@ -16,16 +16,16 @@ class WorkSheet implements IWorkSheet {
         if (!cell)
             cell = new StringCell(value);
 
-        var cellReference = this.xlsx.utils.encode_cell(address);
+        var cellReference = ExcelUtils.encodeCell(address);
         this[cellReference] = cell;
 
         this._range.addAddress(address);
-        this["!ref"] = this.xlsx.utils.encode_range(this._range);
+        this["!ref"] = ExcelUtils.encodeRange(this._range);
     }
 
     getCell(row: number, col: number): ICell {
         var address = new CellAddress(row, col);
-        var cellReference = this.xlsx.utils.encode_cell(address);
+        var cellReference = ExcelUtils.encodeCell(address);
         var cell = this[cellReference];
         return cell;
     }
