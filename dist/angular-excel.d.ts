@@ -127,8 +127,7 @@ interface IExcelRow {
     cells: ICell[];
 }
 declare class ExcelRow implements IExcelRow {
-    private currencyFormat;
-    constructor(currencyFormat: string);
+    constructor();
     addEmpty(): IExcelRow;
     addString(value?: string): IExcelRow;
     addNumber(value?: any): IExcelRow;

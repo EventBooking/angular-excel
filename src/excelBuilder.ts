@@ -54,7 +54,7 @@ interface IExcelRow {
 }
 
 class ExcelRow implements IExcelRow {
-    constructor(private currencyFormat: string) {
+    constructor() {
         this.cells = [];
     }
 
