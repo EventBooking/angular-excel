@@ -1,6 +1,7 @@
 interface IExcelBuilder {
     setCurrency(currency: string): IExcelBuilder;
-    setName(name: string): IExcelBuilder
+    setName(name: string): IExcelBuilder;
+    addRow(row: IExcelRow): IExcelBuilder;
     build(): IWorkSheet;
 }
 
