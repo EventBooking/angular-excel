@@ -74,7 +74,8 @@ class ExcelRow implements IExcelRow {
 
     addEmpty(count:number = 1): IExcelRow {
         for(let i=0; i<count; i++)
-            return this.addString();
+            this.addString();
+        return this;
     }
 
     addString(value?: string): IExcelRow {
