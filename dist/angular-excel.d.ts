@@ -105,6 +105,7 @@ declare class WorkBook implements IWorkBook {
 interface IExcelBuilder {
     setCurrency(currency: string): IExcelBuilder;
     setName(name: string): IExcelBuilder;
+    addRow(row: IExcelRow): IExcelBuilder;
     build(): IWorkSheet;
 }
 declare class ExcelBuilder implements IExcelBuilder {
