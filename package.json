@@ -1,6 +1,6 @@
 {
   "name": "angular-excel",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "",
   "main": "./dist/angular-excel.js",
   "typings": "./dist/angular-excel.d.ts",
