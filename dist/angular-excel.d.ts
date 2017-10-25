@@ -82,8 +82,8 @@ interface IWorkSheet {
     getCell(row: number, col: number): ICell;
 }
 declare class WorkSheet implements IWorkSheet {
-    name: any;
-    constructor(name: any);
+    name: string;
+    constructor(name?: string);
     private _range;
     setCell(row: number, col: number, value: any, cell?: ICell): void;
     getCell(row: number, col: number): ICell;
@@ -121,24 +121,36 @@ declare class ExcelBuilder implements IExcelBuilder {
     private rows;
 }
 interface IExcelRow {
-    addEmpty(): IExcelRow;
+    addEmpty(count?: number): IExcelRow;
     addString(value?: string): IExcelRow;
-    addNumber(value?: any): IExcelRow;
+    addStrings(values: string[]): IExcelRow;
+    addNumber(value?: number): IExcelRow;
+    addNumbers(values: number[]): IExcelRow;
     addCurrency(value?: number): IExcelRow;
+    addCurrencies(values: number[]): IExcelRow;
     addDate(isoDate?: string): IExcelRow;
+    addDates(isoDates: string[]): IExcelRow;
     addTime(isoTime?: string): IExcelRow;
+    addTimes(isoTimes: string[]): IExcelRow;
     addCell(cell: ICell): IExcelRow;
+    addCells(cells: ICell[]): IExcelRow;
     cells: ICell[];
 }
 declare class ExcelRow implements IExcelRow {
     constructor();
-    addEmpty(): IExcelRow;
+    addEmpty(count?: number): IExcelRow;
     addString(value?: string): IExcelRow;
-    addNumber(value?: any): IExcelRow;
+    addStrings(values: string[]): IExcelRow;
+    addNumber(value?: number): IExcelRow;
+    addNumbers(values: number[]): IExcelRow;
     addCurrency(value?: number, format?: string): IExcelRow;
+    addCurrencies(values: number[]): IExcelRow;
     addDate(isoDate?: string): IExcelRow;
+    addDates(isoDates: string[]): IExcelRow;
     addTime(isoTime?: string, format?: string): IExcelRow;
+    addTimes(isoTimes: string[]): IExcelRow;
     addCell(cell: ICell): IExcelRow;
+    addCells(cells: ICell[]): IExcelRow;
     cells: ICell[];
 }
 interface IWorkSheetBuilder<T> {
