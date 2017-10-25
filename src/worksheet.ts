@@ -5,7 +5,8 @@ interface IWorkSheet {
 }
 
 class WorkSheet implements IWorkSheet {
-    constructor(public name) {
+    constructor(public name: string = "worksheet") {
+        name = name.slice(0, 31);
         this._range = new CellRange();
     }
 
