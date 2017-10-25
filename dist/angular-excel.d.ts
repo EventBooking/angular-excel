@@ -103,8 +103,9 @@ declare class WorkBook implements IWorkBook {
     private _sheets;
 }
 interface IExcelBuilder {
-    setCurrency(currency: string): any;
-    setName(name: string): any;
+    setCurrency(currency: string): IExcelBuilder;
+    setName(name: string): IExcelBuilder;
+    build(): IWorkSheet;
 }
 declare class ExcelBuilder implements IExcelBuilder {
     constructor();

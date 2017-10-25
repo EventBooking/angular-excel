@@ -1,6 +1,7 @@
 interface IExcelBuilder {
-    setCurrency(currency: string);
-    setName(name: string);
+    setCurrency(currency: string): IExcelBuilder;
+    setName(name: string): IExcelBuilder
+    build(): IWorkSheet;
 }
 
 class ExcelBuilder implements IExcelBuilder {
