@@ -106,6 +106,7 @@ interface IExcelBuilder {
     setCurrency(currency: string): IExcelBuilder;
     setName(name: string): IExcelBuilder;
     addRow(row: IExcelRow): IExcelBuilder;
+    addRows(rows: IExcelRow[]): IExcelBuilder;
     build(): IWorkSheet;
 }
 declare class ExcelBuilder implements IExcelBuilder {
@@ -113,6 +114,7 @@ declare class ExcelBuilder implements IExcelBuilder {
     setCurrency(currency: string): IExcelBuilder;
     setName(name: string): IExcelBuilder;
     addRow(row: IExcelRow): IExcelBuilder;
+    addRows(rows: IExcelRow[]): IExcelBuilder;
     build(): IWorkSheet;
     private currencyFormat;
     name: string;

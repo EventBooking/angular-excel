@@ -2,6 +2,7 @@ interface IExcelBuilder {
     setCurrency(currency: string): IExcelBuilder;
     setName(name: string): IExcelBuilder;
     addRow(row: IExcelRow): IExcelBuilder;
+    addRows(rows: IExcelRow[]): IExcelBuilder
     build(): IWorkSheet;
 }
 
@@ -22,6 +23,11 @@ class ExcelBuilder implements IExcelBuilder {
 
     addRow(row: IExcelRow): IExcelBuilder {
         this.rows.push(row);
+        return this;
+    }
+
+    addRows(rows: IExcelRow[]): IExcelBuilder {
+        rows.forEach( x => this.addRow(x));
         return this;
     }
 
