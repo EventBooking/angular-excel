@@ -7,10 +7,13 @@
         "inlineSourceMap": true,
         "inlineSources": true,
         "target": "es5",
-        "out": "dist/angular-excel.js"
+        "out": "dist/angular-excel.js",
+        "types": [
+            "angular",
+            "angular-typescript-module"
+        ]
     },
     "files": [
-        "typings/browser.d.ts",
         "src/app.ts",
         "src/utils.ts",
         "src/cellAddress.ts",

@@ -1,11 +1,5 @@
 /* global angular */
 
-function Config() {
-    moment.locale(navigator.language || navigator['userLanguage']);
-    moment.defaultFormat = "YYYY-MM-DDTHH:mm:ss";
-	console.log("configed");
-}
-
 Run.$inject = ['$rootScope', 'excelConverter'];
 
 function Run($rootScope, excelConverter) {
@@ -39,5 +33,4 @@ function TestController(excelConverter) {
 }
 
 angular.module("demo", ["angular-excel", "ngPrettyJson"])
-    .config(Config)
 	.run(Run);

@@ -16,7 +16,6 @@ namespace excel {
     Angular.module("angular-excel", [])
         .constant("saveAs", saveAs)
         .constant("XLSX", XLSX)
-        .constant("moment", moment)
         .constant("currency", currency)
         .constant("accounting", accounting)
         .run(ExcelRun);

@@ -1,9 +1,0 @@
-{
-    "name": "angular-excel",
-    "version": false,
-    "ambientDependencies": {
-        "angularjs": "github:DefinitelyTyped/DefinitelyTyped/angularjs/angular.d.ts#8ea42cd8bb11863ed6f242d67c502288ebc45a7b",
-        "jquery": "registry:dt/jquery#1.10.0+20160316155526",
-        "angular-typescript-module": "github:EventBooking/angular-typescript-module/dist/angular-typescript-module.d.ts"
-    }
-}
